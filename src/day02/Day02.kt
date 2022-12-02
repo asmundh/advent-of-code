@@ -24,26 +24,19 @@ fun main() {
         return roundScore.score + yourPick.score
     }
 
-    fun part1(input: List<String>): Int {
-        var totalScore = 0
-        input.forEach {
+    fun part1(input: List<String>): Int =
+        input.sumOf {
             val hands = it.split(" ")
-            totalScore += getScore(Hands.from(hands[1]), Hands.from(hands[0]))
+            getScore(Hands.from(hands[1]), Hands.from(hands[0]))
         }
-        return totalScore
-    }
 
-    fun part2(input: List<String>): Int {
-        var totalScore = 0
-        input.forEach {
-            val strategy = it.split(" ")
-            val opponentsHand = Hands.from(strategy[0])
-            totalScore += getScore(
-                opponentsHand.getHandForStrategy(Strategy.from(strategy[1])),
-                opponentsHand
-            )
-        }
-        return totalScore
+    fun part2(input: List<String>): Int =  input.sumOf {
+        val strategy = it.split(" ")
+        val opponentsHand = Hands.from(strategy[0])
+        getScore(
+            opponentsHand.getHandForStrategy(Strategy.from(strategy[1])),
+            opponentsHand
+        )
     }
 
     val input = readInput("Day02")
