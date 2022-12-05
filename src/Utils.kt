@@ -23,8 +23,8 @@ fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteA
  * Prints out
  */
 @OptIn(ExperimentalContracts::class, ExperimentalTime::class)
-inline fun printlnTimed(block: () -> Unit): Unit {
-        contract {
-            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
-        }
+inline fun printlnTimed(block: () -> Unit) {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
 }

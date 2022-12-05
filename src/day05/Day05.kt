@@ -58,9 +58,9 @@ fun main() {
 
 fun String.toOperations() =
     filter { it.isDigit() || it.isWhitespace() }
-    .split("  ")
-    .map { it.replace(" ", "") }
-    .map { it.toInt() }
+        .split("  ")
+        .map { it.replace(" ", "") }
+        .map { it.toInt() }
 
 data class Crate(
     val stacks: MutableList<ArrayDeque<String>>

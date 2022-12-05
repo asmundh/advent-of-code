@@ -30,7 +30,7 @@ fun main() {
             getScore(Hands.from(hands[1]), Hands.from(hands[0]))
         }
 
-    fun part2(input: List<String>): Int =  input.sumOf {
+    fun part2(input: List<String>): Int = input.sumOf {
         val strategy = it.split(" ")
         val opponentsHand = Hands.from(strategy[0])
         getScore(
@@ -61,7 +61,7 @@ enum class Hands(
         }
 
     companion object {
-        fun from(shortName: String): Hands  =
+        fun from(shortName: String): Hands =
             when (shortName) {
                 "X", "A" -> ROCK
                 "Y", "B" -> PAPER
@@ -77,13 +77,12 @@ enum class Strategy() {
     DRAW;
 
     companion object {
-        fun from(shortHand: String): Strategy  = when (shortHand) {
-                "X" -> LOSE
-                "Y" -> DRAW
-                "Z" -> WIN
-                else -> throw Exception("Huff da")
-            }
-
+        fun from(shortHand: String): Strategy = when (shortHand) {
+            "X" -> LOSE
+            "Y" -> DRAW
+            "Z" -> WIN
+            else -> throw Exception("Huff da")
+        }
     }
 }
 

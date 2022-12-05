@@ -40,8 +40,8 @@ fun main() {
     println(part1(input))
     println(part2(input))
 
-    val timePart1 = measureTime { repeat(1000) {part1(input)} }
-    val timePart2 = measureTime { repeat(1000) {part2(input)} }
+    val timePart1 = measureTime { repeat(1000) { part1(input) } }
+    val timePart2 = measureTime { repeat(1000) { part2(input) } }
     println(timePart1)
     println(timePart2)
 }
