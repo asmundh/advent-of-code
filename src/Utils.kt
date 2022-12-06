@@ -12,6 +12,8 @@ import kotlin.time.ExperimentalTime
 fun readInput(name: String) = File("src/${name.lowercase()}", "$name.txt")
     .readLines()
 
+fun readFirstLine(name: String) = File("src/${name.lowercase()}", "$name.txt")
+    .readLines().first()
 /**
  * Converts string to md5 hash.
  */
