@@ -91,7 +91,7 @@ fun main() {
                         }
                         val folderSize = files.sumOf { it[0].toInt() }
                         if (folderSizes[currentFolder.second] == null) {
-                            folderSizes[currentFolder.second]= folderSize
+                            folderSizes[currentFolder.second] = folderSize
                         } else {
                             folderSizes[currentFolder.second] = folderSizes[currentFolder.second]?.plus(folderSize)!!
                         }
@@ -161,7 +161,7 @@ fun main() {
                         }
                         val folderSize = files.sumOf { it[0].toInt() }
                         if (folderSizes[currentFolder.second] == null) {
-                            folderSizes[currentFolder.second]= folderSize
+                            folderSizes[currentFolder.second] = folderSize
                         } else {
                             folderSizes[currentFolder.second] = folderSizes[currentFolder.second]?.plus(folderSize)!!
                         }
