@@ -18,24 +18,28 @@ enum class Direction {
     }
 }
 
-data class Rope(
-    val head: Head,
-    val tail: Tail
+data class KnottedRope(
+    val size: Int,
+    val knots: MutableList<Knot> = mutableListOf()
 ) {
+    init {
+        knots.add(Knot(name = "H", parentKnot = null))
+        for (i in 1 until size) {
+            knots.add(Knot(name = "$i", parentKnot = knots.last()))
+        }
+    }
     fun move(direction: Direction) {
-        head.move(direction)
-        tail.follow(head, direction)
+        for (knot in knots) {
+            if (knot.parentKnot == null) knot.move(direction)
+            else knot.follow(knot.parentKnot)
+        }
     }
 }
 
-abstract class RopePart(
-    var position: Coordinate
-)
-
-data class Head(
-    val name: String = "HEAD"
-): RopePart(
-    position = Coordinate(0, 0),
+data class Knot(
+    var position: Coordinate = Coordinate(0, 0),
+    val name: String,
+    val parentKnot: Knot?,
 ) {
     fun move(direction: Direction) {
         position = when (direction) {
@@ -45,88 +49,61 @@ data class Head(
             Direction.RIGHT -> position.copy(x = position.x + 1)
         }
     }
-    override fun toString() = "${position.x},${position.y}"
-}
 
-data class Tail(
-    val name: String = "HEAD"
-): RopePart(
-    position = Coordinate(0, 0),
-) {
-    fun follow(head: RopePart, direction: Direction) {
-        if (position.touches(head.position)) return
-        else {
-            position = when (direction) {
-                Direction.UP -> head.position.copy(y = head.position.y - 1)
-                Direction.DOWN -> head.position.copy(y = head.position.y + 1)
-                Direction.LEFT -> head.position.copy(x = head.position.x + 1)
-                Direction.RIGHT -> head.position.copy(x = head.position.x - 1)
-            }
-        }
+    fun follow(parentKnot: Knot?) {
+        if (parentKnot == null || position.touches(parentKnot.position)) return
+
+        val moveX = parentKnot.position.x.compareTo(position.x)
+        val moveY = parentKnot.position.y.compareTo(position.y)
+        position = position.copy(x = position.x + moveX, y = position.y + moveY)
     }
-    override fun toString() = "${position.x},${position.y}"
+    override fun toString() = "${position.x},${position.y}($name)"
 }
-
-data class Cell(
-    val visited: Boolean = false,
-    val visitedBy: Set<RopePart>,
-)
 
 data class Coordinate(
     var x: Int,
     var y: Int
 ) {
-    fun touches(other: Coordinate): Boolean {
-        val touchesX =
-            (this.x == other.x) ||
-                (this.x == (other.x - 1)) ||
-                (this.x == (other.x + 1))
+    private fun touchesX(other: Coordinate): Boolean = (this.x == other.x) ||
+        (this.x == (other.x - 1)) ||
+        (this.x == (other.x + 1))
 
-        val touchesY =
-            (this.y == other.y) ||
-                (this.y == (other.y - 1)) ||
-                (this.y == (other.y + 1))
+    private fun touchesY(other: Coordinate): Boolean =
+        (this.y == other.y) ||
+            (this.y == (other.y - 1)) ||
+            (this.y == (other.y + 1))
 
-        return touchesX && touchesY
-    }
+    fun touches(other: Coordinate): Boolean = touchesX(other) && touchesY(other)
 }
 
-data class Board(
-    val center: Coordinate = Coordinate(0, 0),
-    val cells: MutableMap<Coordinate, Cell> = mutableMapOf()
-)
-
 fun part1(input: List<String>): Int {
-    val board = Board()
-    val visitedCells: MutableMap<String, Boolean> = mutableMapOf()
-    val rope = Rope(head = Head(), tail = Tail())
-    visitedCells[rope.tail.toString()] = true
+    val visitedCells: MutableSet<Coordinate> = mutableSetOf()
+    val rope = KnottedRope(2)
     input.forEach {
         val command = it.split(" ")
         repeat(command[1].toInt()) {
             rope.move(Direction.from(command[0]))
-            println(rope)
-            visitedCells[rope.tail.toString()] = true
+            visitedCells.add(rope.knots.last().position)
         }
     }
-    println(visitedCells)
+    return visitedCells.size
+}
+
+fun part2(input: List<String>): Int {
+    val visitedCells: MutableSet<Coordinate> = mutableSetOf()
+    val rope = KnottedRope(size = 10)
+    input.forEach {
+        val command = it.split(" ")
+        repeat(command[1].toInt()) {
+            rope.move(Direction.from(command[0]))
+            visitedCells.add(rope.knots.last().position)
+        }
+    }
     return visitedCells.size
 }
 
 fun main() {
-
-    fun part2(input: List<String>): Int {
-        return 1
-    }
-
     val input = readInput("Day09")
-//    val coord1 = Coordinate(0, 0)
-//    println(coord1.touches(coord1.copy(x = 0, y = 0,)))
-//    println(coord1.touches(coord1.copy(x = 1, y = -1,)))
-//    println(coord1.touches(coord1.copy(x = -1, y = 1,)))
-//    println(coord1.touches(coord1.copy(x = -1, y = -1,)))
-//    println(coord1.touches(coord1.copy(x = 1, y = 1,)))
-
     println(part1(input))
-//    println(part2(input))
+    println(part2(input))
 }
