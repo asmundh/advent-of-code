@@ -1,3 +1,4 @@
+import day09.Coordinate
 import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -22,3 +23,36 @@ fun String.splitToPair(): Pair<String, String> =
 
 fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
 fun lcm(a: Long, b: Long): Long = a / gcd(a, b) * b
+
+fun <T> List<List<T>>.getEntryLeftOrNull(x: Int, y: Int): T? =
+    this.getOrNull(y)?.getOrNull(x - 1)
+
+fun <T> List<List<T>>.getEntryRightOrNull(x: Int, y: Int): T? =
+    this.getOrNull(y)?.getOrNull(x + 1)
+
+fun <T> List<List<T>>.getEntryAboveOrNull(x: Int, y: Int): T? =
+    this.getOrNull(y - 1)?.getOrNull(x)
+
+fun <T> List<List<T>>.getEntryBelowOrNull(x: Int, y: Int): T? =
+    this.getOrNull(y + 1)?.getOrNull(x)
+
+/**
+ * a = 1, z = 26,
+ * A = 27, Z = 52
+ */
+fun Char.toAocCode(): Int {
+    return if (isLowerCase()) {
+        code - 96
+    } else if (isUpperCase()) {
+        code - 38
+    } else 0
+}
+
+fun <T> List<List<T>>.findPositionOf(value: T): Coordinate? {
+    this.forEachIndexed {idxY, row ->
+        row.forEachIndexed { idxX, entry ->
+            if (entry == value) return Coordinate(idxX, idxY)
+        }
+    }
+    return null
+}
