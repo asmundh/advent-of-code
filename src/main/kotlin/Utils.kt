@@ -1,4 +1,4 @@
-import day09.Coordinate
+import datastructures.Coordinate
 import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -48,8 +48,11 @@ fun Char.toAocCode(): Int {
     } else 0
 }
 
+fun String.toHalves(): Pair<String, String> =
+    substring(0, length / 2) to substring(length / 2)
+
 fun <T> List<List<T>>.findPositionOf(value: T): Coordinate? {
-    this.forEachIndexed {idxY, row ->
+    this.forEachIndexed { idxY, row ->
         row.forEachIndexed { idxX, entry ->
             if (entry == value) return Coordinate(idxX, idxY)
         }

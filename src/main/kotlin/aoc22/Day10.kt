@@ -1,4 +1,4 @@
-package day10
+package aoc22
 
 import readInput
 
@@ -41,7 +41,7 @@ data class CRT(
     }
 }
 
-fun part1(input: List<String>): Int {
+fun day10part1(input: List<String>): Int {
     var cycle = 0
     var registerX = 1
     val valuesAtCycle: MutableMap<Int, Int> = mutableMapOf()
@@ -60,7 +60,7 @@ fun part1(input: List<String>): Int {
     return valuesAtCycle.getSignalStrengthAtCycles(listOf(20, 60, 100, 140, 180, 220))
 }
 
-fun part2(input: List<String>) {
+fun day10part2(input: List<String>) {
     val sprite = Sprite()
     val crt = CRT(sprite = sprite)
 
@@ -81,6 +81,6 @@ fun part2(input: List<String>) {
 fun main() {
     val input = readInput("Day10")
 
-    println(part1(input))
-    println(part2(input))
+    println(day10part1(input))
+    println(day10part2(input))
 }

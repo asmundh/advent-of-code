@@ -1,8 +1,8 @@
-package day01
+package aoc22
 
 import readInput
 
-fun part1(input: List<String>): Int {
+fun day1part1(input: List<String>): Int {
     var maxSum = 0
     var newSum = 0
     input.forEach {
@@ -16,7 +16,7 @@ fun part1(input: List<String>): Int {
     return maxSum
 }
 
-fun part2(input: List<String>): Int {
+fun day1part2(input: List<String>): Int {
     val maxSums: MutableList<Int> = mutableListOf()
     var newSum = 0
     input.forEach {
@@ -34,6 +34,6 @@ fun part2(input: List<String>): Int {
 fun main() {
 
     val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
+    println(day1part1(input))
+    println(day1part2(input))
 }

@@ -1,4 +1,4 @@
-package day07
+package aoc22
 
 import readInput
 
@@ -45,7 +45,7 @@ fun String.increaseSizeOfParentFolder(folders: MutableMap<String, Int>, size: In
     }
 }
 
-fun part1(input: List<String>): Int {
+fun day7part1(input: List<String>): Int {
     var currentFolder = 0 to "/"
 
     val inputIt = input.iterator()
@@ -105,7 +105,7 @@ fun part1(input: List<String>): Int {
     return outFolders.values.sum()
 }
 
-fun part2(input: List<String>): Int {
+fun day7part2(input: List<String>): Int {
     var currentFolder = 0 to "/"
     var totalFileSize = 0
 
@@ -168,6 +168,6 @@ fun part2(input: List<String>): Int {
 
 fun main() {
     val input = readInput("Day07")
-    println(part1(input))
-    println(part2(input))
+    println(day7part1(input))
+    println(day7part2(input))
 }

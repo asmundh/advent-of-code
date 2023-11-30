@@ -1,4 +1,4 @@
-package day11
+package aoc22
 
 import lcm
 import readInput
@@ -85,7 +85,7 @@ fun List<String>.parseToMonkey(): Monkey =
         ifFalseTarget = this[5].split("monkey ")[1].toInt(),
     )
 
-fun part1(input: List<String>): Long {
+fun day11part1(input: List<String>): Long {
     val monkeys = input.chunked(7).map { it.parseToMonkey() }
     val monkeyGang = MonkeyGang(monkeys = monkeys, worryDivisor = 3)
     monkeyGang.trigger()
@@ -93,7 +93,7 @@ fun part1(input: List<String>): Long {
     return monkeyGang.measureMonkeyBusinessLevel()
 }
 
-fun part2(input: List<String>): Long {
+fun day11part2(input: List<String>): Long {
     val monkeys = input.chunked(7).map { it.parseToMonkey() }
     val monkeyGang = MonkeyGang(monkeys = monkeys, rounds = 10000)
     monkeyGang.trigger()
@@ -103,6 +103,6 @@ fun part2(input: List<String>): Long {
 
 fun main() {
     val input = readInput("Day11")
-    println(part1(input))
-    println(part2(input))
+    println(day11part1(input))
+    println(day11part2(input))
 }

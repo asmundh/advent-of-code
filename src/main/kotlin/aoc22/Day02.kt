@@ -1,4 +1,4 @@
-package day02
+package aoc22
 
 import readInput
 
@@ -71,13 +71,13 @@ enum class Scores(val score: Int) {
     WIN(6);
 }
 
-fun part1(input: List<String>): Int =
+fun day2part1(input: List<String>): Int =
     input.sumOf {
         val hands = it.split(" ")
         getScore(Hands.from(hands[1]), Hands.from(hands[0]))
     }
 
-fun part2(input: List<String>): Int = input.sumOf {
+fun day2part2(input: List<String>): Int = input.sumOf {
     val strategy = it.split(" ")
     val opponentsHand = Hands.from(strategy[0])
     getScore(
@@ -88,6 +88,6 @@ fun part2(input: List<String>): Int = input.sumOf {
 
 fun main() {
     val input = readInput("Day02")
-    println(part1(input))
-    println(part2(input))
+    println(day2part1(input))
+    println(day2part2(input))
 }

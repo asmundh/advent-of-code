@@ -1,19 +1,11 @@
-package day03
+package aoc22
 
 import readInput
+import toAocCode
+import toHalves
 
-fun Char.toAocCode(): Int {
-    return if (isLowerCase()) {
-        code - 96
-    } else if (isUpperCase()) {
-        code - 38
-    } else 0
-}
 
-fun String.toHalves(): Pair<String, String> =
-    substring(0, length / 2) to substring(length / 2)
-
-fun part1(input: List<String>): Int =
+fun day3part1(input: List<String>): Int =
     input.sumOf {
         val halves = it.toHalves()
         halves.first
@@ -23,7 +15,7 @@ fun part1(input: List<String>): Int =
             .toAocCode()
     }
 
-fun part2(input: List<String>): Int =
+fun day3part2(input: List<String>): Int =
     input.chunked(3).sumOf {
         val first = it.first().toSet()
         val second = it[1].toSet()
@@ -35,6 +27,6 @@ fun part2(input: List<String>): Int =
 fun main() {
 
     val input = readInput("Day03")
-    println(part1(input))
-    println(part2(input))
+    println(day3part1(input))
+    println(day3part2(input))
 }

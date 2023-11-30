@@ -1,4 +1,4 @@
-package day05
+package aoc22
 
 import readInput
 

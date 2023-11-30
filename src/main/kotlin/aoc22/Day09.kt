@@ -1,5 +1,6 @@
-package day09
+package aoc22
 
+import datastructures.Coordinate
 import readInput
 
 enum class Direction {
@@ -60,23 +61,7 @@ data class Knot(
     override fun toString() = "${position.x},${position.y}($name)"
 }
 
-data class Coordinate(
-    var x: Int,
-    var y: Int
-) {
-    private fun touchesX(other: Coordinate): Boolean = (this.x == other.x) ||
-        (this.x == (other.x - 1)) ||
-        (this.x == (other.x + 1))
-
-    private fun touchesY(other: Coordinate): Boolean =
-        (this.y == other.y) ||
-            (this.y == (other.y - 1)) ||
-            (this.y == (other.y + 1))
-
-    fun touches(other: Coordinate): Boolean = touchesX(other) && touchesY(other)
-}
-
-fun part1(input: List<String>): Int {
+fun day9part1(input: List<String>): Int {
     val visitedCells: MutableSet<Coordinate> = mutableSetOf()
     val rope = KnottedRope(2)
     input.forEach {
@@ -89,7 +74,7 @@ fun part1(input: List<String>): Int {
     return visitedCells.size
 }
 
-fun part2(input: List<String>): Int {
+fun day9part2(input: List<String>): Int {
     val visitedCells: MutableSet<Coordinate> = mutableSetOf()
     val rope = KnottedRope(size = 10)
     input.forEach {
@@ -104,6 +89,6 @@ fun part2(input: List<String>): Int {
 
 fun main() {
     val input = readInput("Day09")
-    println(part1(input))
-    println(part2(input))
+    println(day9part1(input))
+    println(day9part2(input))
 }

@@ -1,13 +1,8 @@
-package day08
+package aoc22
 
+import datastructures.Direction
 import readInput
 
-enum class Direction {
-    NORTH,
-    WEST,
-    EAST,
-    SOUTH;
-}
 
 fun List<List<Int>>.heightOfTreeInDirection(direction: Direction, y: Int, x: Int): Int {
     if ((y == 0) || (x == 0) || (y == lastIndex) || x == lastIndex) return -1
@@ -60,7 +55,7 @@ fun List<List<Int>>.isVisibleFromLeft(y: Int, x: Int): Boolean {
 fun String.splitToIntList(): List<Int> =
     this.map { it.toString().toInt() }
 
-fun part1(input: List<String>): Int {
+fun day8part1(input: List<String>): Int {
     val treeLines = input.map { it.splitToIntList() }
     var count = 0
     treeLines.forEachIndexed { y, trees ->
@@ -77,13 +72,13 @@ fun part1(input: List<String>): Int {
     return count
 }
 
-fun part2(input: List<String>): Int {
+fun day8part2(input: List<String>): Int {
     val sum = input.sumOf { it.length }
     return sum
 }
 
 fun main() {
     val input = readInput("Day08")
-    println(part1(input))
-    println(part2(input))
+    println(day8part1(input))
+    println(day8part2(input))
 }

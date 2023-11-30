@@ -1,13 +1,13 @@
-package day12
+package aoc22
 
-import day09.Coordinate
+import datastructures.Coordinate
 import getEntryAboveOrNull
 import getEntryBelowOrNull
 import getEntryLeftOrNull
 import getEntryRightOrNull
 import readInput
 import toAocCode
-import java.util.*
+import java.util.PriorityQueue
 import kotlin.math.abs
 
 data class Vertex(
@@ -22,9 +22,9 @@ data class Grid(
     val lowValues: List<Coordinate>
 )
 
-fun List<String>.toGrid():Grid {
-    var startPosition = Coordinate(0, 0);
-    var endPosition = Coordinate(0, 0);
+fun List<String>.toGrid(): Grid {
+    var startPosition = Coordinate(0, 0)
+    var endPosition = Coordinate(0, 0)
     val lowValues = mutableListOf<Coordinate>()
     val grid = this.mapIndexed { idxY, row ->
         row.mapIndexed inner@{ idxX, it ->
@@ -90,7 +90,7 @@ fun List<List<Int>>.aStar(start: Coordinate, goal: Coordinate): Int {
             return reconstructPath(cameFrom, current)
 
         openSet.remove(current)
-        val neighbors = this.getNeighbors(current.position.x, current.position.y)// .filter { it.second != cameFrom[current.position]?.position }
+        val neighbors = this.getNeighbors(current.position.x, current.position.y) // .filter { it.second != cameFrom[current.position]?.position }
         for (neighbor in neighbors) {
             val neighborPosition = neighbor.second
             val currentG = gScore[current.position]
@@ -101,7 +101,7 @@ fun List<List<Int>>.aStar(start: Coordinate, goal: Coordinate): Int {
             if (tentativeScoreG < (neighborScoreG)) {
                 cameFrom[neighborPosition] = current
                 gScore[neighborPosition] = tentativeScoreG
-                fScore[neighborPosition] = tentativeScoreG  + neighborPosition.heuristic(goal)
+                fScore[neighborPosition] = tentativeScoreG + neighborPosition.heuristic(goal)
                 val neighborVertex = Vertex(neighborPosition, fScore[neighborPosition]!!)
                 if (!openSet.contains(neighborVertex))
                     openSet.add(neighborVertex)
@@ -111,12 +111,12 @@ fun List<List<Int>>.aStar(start: Coordinate, goal: Coordinate): Int {
     return Int.MAX_VALUE
 }
 
-fun part1(input: List<String>): Int {
+fun day12part1(input: List<String>): Int {
     val grid = input.toGrid()
     return grid.grid.aStar(grid.startPosition, grid.endPosition)
 }
 
-fun part2(input: List<String>): Int {
+fun day12part2(input: List<String>): Int {
     val grid = input.toGrid()
     val attempts = mutableListOf<Int>()
     println(grid.lowValues)
@@ -130,7 +130,7 @@ fun part2(input: List<String>): Int {
 fun main() {
     val input = readInput("Day12")
 
-    println(part1(input))
+    println(day12part1(input))
 
-    println(part2(input))
+    println(day12part2(input))
 }
