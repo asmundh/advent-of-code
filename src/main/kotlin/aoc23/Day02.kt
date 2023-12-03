@@ -6,13 +6,12 @@ import kotlin.math.max
 
 fun day2part1(input: List<String>): Int {
     val games = input.map { parseGame(it) }
-    val legalGames =  games.filter {
+    val legalGames = games.filter {
         it.sets.all {
-            it.red <= 12
-                    && it.green <= 13
-                    && it.blue <= 14
+            it.red <= 12 &&
+                it.green <= 13 &&
+                it.blue <= 14
         }
-
     }
 
     return legalGames.sumOf { it.id }
@@ -37,7 +36,7 @@ fun parseGame(game: String): Game {
     val idAndSets = game.split(":")
     val id = idAndSets.first().filter { it.isDigit() }.toInt()
     val sets = idAndSets.last().split(";").map {
-        val cubes =  it.split(",")
+        val cubes = it.split(",")
         var red = 0
         var blue = 0
         var green = 0
@@ -54,12 +53,10 @@ fun parseGame(game: String): Game {
         GameSet(blue, red, green)
     }
 
-
     return Game(
         id,
         sets
     )
-
 }
 
 data class Game(
@@ -72,7 +69,6 @@ data class GameSet(
     val red: Int,
     val green: Int,
 )
-
 
 fun main() {
     val input: List<String> = InputReader.getInputAsList(2)

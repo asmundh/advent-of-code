@@ -3,7 +3,6 @@ package aoc22
 import datastructures.Direction
 import readInput
 
-
 fun List<List<Int>>.heightOfTreeInDirection(direction: Direction, y: Int, x: Int): Int {
     if ((y == 0) || (x == 0) || (y == lastIndex) || x == lastIndex) return -1
 

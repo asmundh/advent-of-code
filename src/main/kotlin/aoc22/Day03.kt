@@ -4,7 +4,6 @@ import readInput
 import toAocCode
 import toHalves
 
-
 fun day3part1(input: List<String>): Int =
     input.sumOf {
         val halves = it.toHalves()
