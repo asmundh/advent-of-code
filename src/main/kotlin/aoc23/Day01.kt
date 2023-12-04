@@ -1,5 +1,6 @@
 package aoc23
 
+import runTask
 import utils.InputReader
 
 fun day1part1(input: List<String>): Int {
@@ -55,6 +56,6 @@ fun getDigit(input: String): Int {
 
 fun main() {
     val input: List<String> = InputReader.getInputAsList(1)
-    println(day1part1(input))
-    println(day1part2(input))
+    runTask("D1p1") { day1part1(input) }
+    runTask("D1p2") { day1part2(input) }
 }

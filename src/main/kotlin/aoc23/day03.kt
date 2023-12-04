@@ -2,6 +2,7 @@ package aoc23
 
 import datastructures.Coordinate
 import datastructures.getAllAdjacentCoordinates
+import runTask
 import utils.InputReader
 import java.util.UUID
 
@@ -72,6 +73,6 @@ data class SymbolsAndParts(
 
 fun main() {
     val input: List<String> = InputReader.getInputAsList(3)
-    println(day3part1(input))
-    println(day3part2(input))
+    runTask("D3p1") { day3part1(input) }
+    runTask("D3p2") { day3part2(input) }
 }

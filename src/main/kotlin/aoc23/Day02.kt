@@ -1,5 +1,6 @@
 package aoc23
 
+import runTask
 import utils.InputReader
 import java.lang.IllegalStateException
 import kotlin.math.max
@@ -72,6 +73,6 @@ data class GameSet(
 
 fun main() {
     val input: List<String> = InputReader.getInputAsList(2)
-    println(day2part1(input))
-    println(day2part2(input))
+    runTask("D2p1") { day2part1(input) }
+    runTask("D2p2") { day2part2(input) }
 }

@@ -1,6 +1,7 @@
 package aoc23
 
 import pow
+import runTask
 import utils.InputReader
 import kotlin.math.max
 
@@ -56,6 +57,6 @@ data class ScratchCard(
 
 fun main() {
     val input: List<String> = InputReader.getInputAsList(4)
-    println(day4part1(input))
-    println(day4part2(input))
+    runTask("D4p1") { day4part1(input) }
+    runTask("D4p2") { day4part2(input) }
 }

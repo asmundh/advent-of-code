@@ -2,6 +2,7 @@ import datastructures.Coordinate
 import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
+import kotlin.system.measureTimeMillis
 
 /**
  * Reads lines from the given input txt file.
