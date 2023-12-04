@@ -59,3 +59,14 @@ fun <T> List<List<T>>.findPositionOf(value: T): Coordinate? {
     }
     return null
 }
+
+fun Int.pow(exponent: Int): Int = if (exponent == 0) 1 else this * pow(exponent - 1)
+
+fun runTask(taskName: String, task: () -> Any) {
+    var res: Any
+    val time = measureTimeMillis {
+        res = task()
+
+    }.toDouble()
+    println("$taskName - Result: $res, took ${time / 1000} s ($time ms)")
+}
