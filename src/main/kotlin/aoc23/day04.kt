@@ -2,6 +2,7 @@ package aoc23
 
 import utils.InputReader
 import kotlin.math.max
+import kotlin.time.ExperimentalTime
 
 fun day4part1(input: List<String>): Int {
     return input.sumOf {
@@ -14,10 +15,12 @@ fun day4part2(input: List<String>): Int {
     val counts: MutableMap<Int, Int> = mutableMapOf()
 
     val backlog: MutableList<ScratchCard> = scratchCards.values.toMutableList()
+    val cache: MutableMap<Int, Int> = mutableMapOf()
 
-    while (backlog.isNotEmpty()) {
-        val card = backlog.removeFirst()
-        val wins = card.getAmountOfWinningCards()
+    var index = 0
+    while (index < backlog.size) {
+        val card = backlog[index++]
+        val wins = cache[card.id] ?: card.getAmountOfWinningCards().also { cache[card.id] = it }
         counts[card.id] = max((counts[card.id]?.plus(1)) ?: -1, 1)
         for (i in 1 .. wins) {
             val newCard = scratchCards[card.id + i]
