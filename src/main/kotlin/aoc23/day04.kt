@@ -1,15 +1,17 @@
 package aoc23
 
+import getIntegerListsSplitBy
+import toOnlyInteger
 import pow
 import runTask
+import toSets
 import utils.InputReader
 import kotlin.math.max
 
-fun day4part1(input: List<String>): Int {
-    return input.sumOf {
+fun day4part1(input: List<String>): Int =
+    input.sumOf {
         getScratchCard(it).getScore()
     }
-}
 
 fun day4part2(input: List<String>): Int {
     val scratchCards = input.map { getScratchCard(it) }.associateBy { it.id }
@@ -31,15 +33,12 @@ fun day4part2(input: List<String>): Int {
 }
 
 fun getScratchCard(card: String): ScratchCard {
-    val cardWithNumbers = card.split(":")
-    val winnersAndScratches = cardWithNumbers[1].split("|")
-    val winningNumbers = winnersAndScratches.first().split(" ").mapNotNull { it.toIntOrNull() }.toSet()
-    val scratchedNumbers = winnersAndScratches[1].split(" ").mapNotNull { it.toIntOrNull() }.toSet()
+    val (winningNumbers, scratchedNumbers) = card.substringAfter(':').getIntegerListsSplitBy('|').toSets()
     return ScratchCard(
-        cardWithNumbers.first().takeLastWhile { it.isDigit() }.toInt(),
+        card.substringBefore(":").toOnlyInteger(),
         winningNumbers,
         scratchedNumbers,
-        winningNumbers.intersect(scratchedNumbers.toSet()).size
+        winningNumbers.intersect(scratchedNumbers).size
     )
 }
 

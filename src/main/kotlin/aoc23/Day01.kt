@@ -6,7 +6,7 @@ import utils.InputReader
 fun day1part1(input: List<String>): Int {
     return input.sumOf {
         val d1 = it.first { it.isDigit() }.digitToInt()
-        val d2 = it.last() { it.isDigit() }.digitToInt()
+        val d2 = it.last { it.isDigit() }.digitToInt()
         "$d1$d2".toInt()
     }
 }

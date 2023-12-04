@@ -1,5 +1,6 @@
 package aoc23
 
+import toOnlyInteger
 import runTask
 import utils.InputReader
 import java.lang.IllegalStateException
@@ -7,8 +8,8 @@ import kotlin.math.max
 
 fun day2part1(input: List<String>): Int {
     val games = input.map { parseGame(it) }
-    val legalGames = games.filter {
-        it.sets.all {
+    val legalGames = games.filter { game ->
+        game.sets.all {
             it.red <= 12 &&
                 it.green <= 13 &&
                 it.blue <= 14
@@ -34,15 +35,13 @@ fun day2part2(input: List<String>): Int {
 }
 
 fun parseGame(game: String): Game {
-    val idAndSets = game.split(":")
-    val id = idAndSets.first().filter { it.isDigit() }.toInt()
-    val sets = idAndSets.last().split(";").map {
+    val sets = game.substringAfter(':').split(";").map {
         val cubes = it.split(",")
         var red = 0
         var blue = 0
         var green = 0
         cubes.forEach { cube ->
-            val count = cube.substringBeforeLast(' ').trim().toInt()
+            val count = cube.substringBeforeLast(' ').toOnlyInteger()
             val color = cube.substringAfterLast(' ')
             when (color.length) {
                 3 -> red = count
@@ -55,7 +54,7 @@ fun parseGame(game: String): Game {
     }
 
     return Game(
-        id,
+        game.substringBefore(':').toOnlyInteger(),
         sets
     )
 }
