@@ -22,6 +22,17 @@ fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteA
 fun String.splitToPair(): Pair<String, String> =
     substring(0, length / 2) to substring(length / 2)
 
+fun String.getIntegersList(): List<Int> =
+    this.split(" ").mapNotNull { it.toIntOrNull() }
+
+fun String.getIntegerListsSplitBy(delimiter: Char): Pair<List<Int>, List<Int>> =
+    this.split(delimiter).map { it.getIntegersList() }.let { it[0] to it[1] }
+
+fun <T> Pair<List<T>, List<T>>.toSets() = first.toSet() to second.toSet()
+
+fun String.toOnlyInteger(): Int =
+    this.filter { it.isDigit() }.toInt()
+
 fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
 fun lcm(a: Long, b: Long): Long = a / gcd(a, b) * b
 
