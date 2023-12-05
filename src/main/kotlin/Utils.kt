@@ -25,6 +25,9 @@ fun String.splitToPair(): Pair<String, String> =
 fun String.getIntegersList(): List<Int> =
     this.split(" ").mapNotNull { it.toIntOrNull() }
 
+fun String.getLongList(): List<Long> =
+    this.split(" ").mapNotNull { it.toLongOrNull() }
+
 fun String.getIntegerListsSplitBy(delimiter: Char): Pair<List<Int>, List<Int>> =
     this.split(delimiter).map { it.getIntegersList() }.let { it[0] to it[1] }
 
