@@ -1,7 +1,7 @@
 package aoc23
 
-import toOnlyInteger
 import runTask
+import toOnlyInteger
 import utils.InputReader
 import java.lang.IllegalStateException
 import kotlin.math.max

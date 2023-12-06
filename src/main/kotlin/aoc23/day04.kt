@@ -1,9 +1,9 @@
 package aoc23
 
 import getIntegerListsSplitBy
-import toOnlyInteger
 import pow
 import runTask
+import toOnlyInteger
 import toSets
 import utils.InputReader
 import kotlin.math.max
@@ -23,7 +23,7 @@ fun day4part2(input: List<String>): Int {
     while (index < backlog.size) {
         val card = backlog[index++]
         counts[card.id] = max((counts[card.id]?.plus(1)) ?: -1, 1)
-        for (i in 1 .. card.amountOfWinningCards) {
+        for (i in 1..card.amountOfWinningCards) {
             scratchCards[card.id + i]?.let { newCard ->
                 backlog.add(newCard)
             }
