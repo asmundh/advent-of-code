@@ -81,7 +81,6 @@ fun runTask(taskName: String, task: () -> Any) {
     var res: Any
     val time = measureTimeMillis {
         res = task()
-
     }.toDouble()
     println("$taskName - Result: $res, took ${time / 1000} s ($time ms)")
 }

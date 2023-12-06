@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.7.22"
+    kotlin("jvm") version "2.0.0-Beta1"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
@@ -7,16 +7,12 @@ repositories {
     mavenCentral()
 }
 
-tasks {
-    sourceSets {
-        main {
-            java.srcDirs("src")
-        }
-    }
+dependencies {
+    testImplementation(kotlin("test"))
+}
 
-    wrapper {
-        gradleVersion = "7.6"
-    }
+tasks.test {
+    useJUnitPlatform()
 }
 
 subprojects {
