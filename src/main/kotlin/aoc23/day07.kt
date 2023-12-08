@@ -5,93 +5,72 @@ import splitToPair
 import utils.InputReader
 import java.lang.IllegalArgumentException
 import java.lang.IllegalStateException
-import kotlin.math.max
 
-//fun day7part1(input: List<String>): Long {
-//    val cards = input.map {
-//        val (card, bid) = it.splitToPair(' ')
-//        return@map Card(
-//            card.sortedAsCard(),
-//            card,
-//            bid.toLong(),
-//        )
-//    }.sorted()
-//    return cards.mapIndexed { idx, card ->
-//        card.bid * (idx + 1)
-//    }.sum()
-//}
-
-fun day7part2(input: List<String>): Long {
-    val cards = input.map {
-        val (card, bid) = it.splitToPair(' ')
-        return@map Card(
-            card.sortedAsCard(),
-            card,
-            bid.toLong(),
-        )
-    }.sorted()
+fun day7part1(input: List<String>): Int {
+    val cards = input.getCards().sorted()
     return cards.mapIndexed { idx, card ->
         card.bid * (idx + 1)
     }.sum()
 }
 
-fun String.sortedAsCard(): String {
-    val letters = filter { it.isLetter() }
-    val aces = letters.filter { it == 'A' }
-    val kings = letters.filter { it == 'K' }
-    val queens = letters.filter { it == 'Q' }
-    val knights = letters.filter { it == 'J' }
-    val tens = letters.filter { it == 'T' }
-    val nums = filter { it.isDigit() }.map { it.digitToInt() }.sortedDescending().joinToString("")
-    return aces + kings + queens + knights + tens + nums
+fun day7part2(input: List<String>): Int {
+    val cards = input.getCards(jokerBad = true).sorted()
+    return cards.mapIndexed { idx, card ->
+        card.bid * (idx + 1)
+    }.sum()
 }
 
-data class Card(
-    val card: String,
-    val originalCard: String,
-    val bid: Long,
-): Comparable<Card> {
-    override fun compareTo(other: Card): Int {
-        val thisCardAndCounts: MutableMap<Char, Long> = mutableMapOf()
-        val otherCardAndCounts: MutableMap<Char, Long> = mutableMapOf()
-        card.forEach {
-            thisCardAndCounts[it] = max(thisCardAndCounts[it]?.plus(1) ?: -1, 1)
+fun List<String>.getCards(jokerBad: Boolean = false) =
+    this.map {
+        val (card, bid) = it.splitToPair(' ')
+        Hand(card, bid.toInt(), jokerBad)
+    }
+
+data class Hand(
+    val cards: String,
+    val bid: Int,
+    val jokerBad: Boolean
+) : Comparable<Hand> {
+    override fun compareTo(other: Hand): Int {
+        val otherCardType = other.cards.groupingBy { it }.eachCount().mapToHandType(jokerBad)
+        val thisCardType = cards.groupingBy { it }.eachCount().mapToHandType(jokerBad)
+
+        if (thisCardType != otherCardType) return thisCardType - otherCardType
+
+        for (i in 0 until 5) {
+            val thisCardScore = this.cards[i].mapToCardNumber(jokerBad)
+            val otherCardScore = other.cards[i].mapToCardNumber(jokerBad)
+
+            if (thisCardScore == otherCardScore && i == 4) return 0
+
+            if (thisCardScore != otherCardScore) return thisCardScore - otherCardScore
         }
-        other.card.forEach {
-            otherCardAndCounts[it] = max(otherCardAndCounts[it]?.plus(1) ?: -1, 1)
-        }
-
-        val thisCardType = thisCardAndCounts.mapToHandType()
-        val otherCardType = otherCardAndCounts.mapToHandType()
-
-        if (thisCardType > otherCardType) {
-            return 1 // Return this
-        } else if (thisCardType < otherCardType) {
-            return -1 // return other
-        } else { // equal type
-            for (i in 0 until 5) {
-                val thisCard = this.originalCard[i]
-                val thisCardScore = thisCard.mapToCardNumber()
-
-                val otherCard = other.originalCard[i]
-                val otherCardScore = otherCard.mapToCardNumber()
-
-                if (thisCardScore > otherCardScore) {
-                    return 1
-                } else if (thisCardScore < otherCardScore) {
-                    return -1
-                } else {
-                    if (i == 4) return 0
-                }
-            }
-        }
-
-        throw IllegalStateException("WTF $this VS $other")
+        throw IllegalStateException("compareTo has not been implemented correctly.")
     }
 }
 
-fun MutableMap<Char, Long>.mapToHandType() : Long {
-    return when (map {it.value}.sortedDescending().joinToString("")) {
+fun Map<Char, Int>.mapToHandType(jokerBad: Boolean = false): Int {
+    val amountOfJ = this['J'] ?: 0
+    if (amountOfJ == 0 || !jokerBad) return this.mapToScore()
+
+    val enhancedHands: MutableList<Map<Char, Int>> = mutableListOf()
+    val handWithoutJ = this.keys.filter { it != 'J' }.associateWith { this[it]!! }
+
+    val scores = mutableListOf<Int>()
+
+    for (i in 0 until handWithoutJ.size) {
+        val newHand = handWithoutJ.toMutableMap()
+        val cardToInc = newHand.keys.toList()[i]
+        newHand[cardToInc] = newHand[cardToInc]?.plus(amountOfJ)!!
+        enhancedHands.add(newHand)
+        scores.add(newHand.mapToScore())
+    }
+
+    return scores.maxOrNull() ?: 7
+}
+
+fun Map<Char, Int>.mapToScore(): Int =
+    when (this.map { it.value }.sortedDescending().joinToString("")) {
         "5" -> 7
         "41" -> 6
         "32" -> 5
@@ -99,18 +78,17 @@ fun MutableMap<Char, Long>.mapToHandType() : Long {
         "221" -> 3
         "2111" -> 2
         "11111" -> 1
-        else -> throw IllegalArgumentException("WHAT IS THIS: ${map {it.value}.sortedDescending().joinToString("")}")
+        else -> throw IllegalArgumentException("INPUT: $this. Should not happen.")
     }
-}
 
-fun Char.mapToCardNumber(): Long =
+fun Char.mapToCardNumber(jokerBad: Boolean = false): Int =
     when (this) {
         'A' -> 14
         'K' -> 13
         'Q' -> 12
-        'J' -> 11
+        'J' -> if (jokerBad) 1 else 11
         'T' -> 10
-        else -> this.digitToInt().toLong()
+        else -> this.digitToInt()
     }
 
 fun main() {

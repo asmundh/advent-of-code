@@ -80,7 +80,6 @@ fun getPlantMap(section: List<String>): List<PlantMap> =
             }
     }
 
-
 data class SeedMapRoute(
     val seeds: List<Seed>,
     val seeds2: List<Seed2>,

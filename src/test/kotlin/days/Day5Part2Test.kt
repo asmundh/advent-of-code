@@ -5,7 +5,6 @@ import aoc23.Seed2
 import aoc23.SeedMapRoute
 import aoc23.traversePart2
 import org.junit.jupiter.api.Test
-import kotlin.math.exp
 import kotlin.test.assertEquals
 
 class Day5Part2Test {

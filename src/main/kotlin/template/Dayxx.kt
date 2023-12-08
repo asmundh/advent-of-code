@@ -1,6 +1,5 @@
 package template
 
-import readInput
 import runTask
 import utils.InputReader
 

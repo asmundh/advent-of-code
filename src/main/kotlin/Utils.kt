@@ -22,6 +22,9 @@ fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteA
 fun String.splitToPair(): Pair<String, String> =
     substring(0, length / 2) to substring(length / 2)
 
+fun String.splitToPair(delimiter: Char): Pair<String, String> =
+    this.split(delimiter).let { Pair(it.first(), it.last()) }
+
 fun String.getIntegersList(): List<Int> =
     this.split(" ").mapNotNull { it.toIntOrNull() }
 

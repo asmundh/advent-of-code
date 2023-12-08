@@ -17,7 +17,7 @@ fun day6part1(input: List<String>): Int {
             }
         }
         timesBeat
-    }.reduce { acc, i -> acc * i}
+    }.reduce { acc, i -> acc * i }
 }
 
 fun day6part2(input: List<String>): Int {
@@ -36,6 +36,6 @@ fun day6part2(input: List<String>): Int {
 
 fun main() {
     val input = InputReader.getInputAsList<String>(6)
-    runTask("DxP1") {day6part1(input) }
-    runTask("DxP2") {day6part2(input) }
+    runTask("DxP1") { day6part1(input) }
+    runTask("DxP2") { day6part2(input) }
 }
