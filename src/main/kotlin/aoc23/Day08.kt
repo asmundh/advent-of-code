@@ -1,6 +1,7 @@
 package aoc23
 
 import lcm
+import lcmOfList
 import runTask
 import utils.InputReader
 import java.lang.IllegalStateException
@@ -44,7 +45,7 @@ fun day8part2(input: List<String>): Long {
         }
         goals.add(moves)
     }
-    return goals.reduce { acc, num -> lcm(acc, num) }
+    return lcmOfList(goals)
 }
 
 data class SwampMap(

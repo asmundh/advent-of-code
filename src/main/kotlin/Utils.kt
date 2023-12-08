@@ -42,6 +42,8 @@ fun String.toOnlyInteger(): Int =
 fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
 fun lcm(a: Long, b: Long): Long = a / gcd(a, b) * b
 
+fun lcmOfList(numbers: List<Long>): Long = numbers.reduce { acc, num -> lcm(acc, num) }
+
 fun <T> List<List<T>>.getEntryLeftOrNull(x: Int, y: Int): T? =
     this.getOrNull(y)?.getOrNull(x - 1)
 
